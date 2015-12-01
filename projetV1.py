@@ -66,6 +66,7 @@ def test_tokenized_article(article):
 		new_article = []
 		article['.W'] = article['.W'].split(" ")
 		for token in article['.W']:
+			token = token.lower()
 			token = token.replace(".","")
 			token = token.replace(",","")
 			token = token.replace("'", "")
@@ -77,5 +78,13 @@ def test_tokenized_article(article):
 	else:
 		return -1
 
+def suppr_commonwords_article(tokenized_article):
+	for token in tokenized_article:
+		if token in common_tokenized:
+			tokenized_article.remove(token)
+	return tokenized_article
+
 print(test_tokenized_article(articles[20]))
 print(articles[20]['.W'])
+
+print(suppr_commonwords_article(articles[20]['.W']))
