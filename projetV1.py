@@ -17,55 +17,38 @@ def stockercollection(path):
 			elif (line[0:2] not in separateurs and id <> -1 and line[0:2] <> ".I"):
 				if (separateur in document.keys()):
 					if (separateur == ".A"):
-						document[separateur] = document[separateur] + [line.replace('\n', '')]
+						document[separateur] = document[separateur] + [line.replace('\n', ' ')]
 					else:
-						document[separateur] = document[separateur] + line.replace('\n','')
+						document[separateur] = document[separateur] + line.replace('\n',' ')
 				else:
 					if (separateur == ".A"):
-						document[separateur] = [line.replace('\n', '')]
+						document[separateur] = [line.replace('\n', ' ')]
 					else:
-						document[separateur] = line.replace('\n','')
+						document[separateur] = line.replace('\n',' ')
 		
 		documents[id] = document
 		return documents
 
+#on stocke les articles de notre collection dans le dico articles
 articles = stockercollection("cacm.all")
 
 #print(articles[18].keys())
 #print(articles[20].keys())
-print(articles[20]['.W'])
+#print(articles[20]['.W'])
 #print(len(articles.keys()))
-
 
 #Stockage des commons words dans un array
 fichier_common_words = open("common_words", "r")
 common_words_contenu = fichier_common_words.read()
 common_tokenized = common_words_contenu.split("\n")
 
-#print(common_tokenized)
-
-def tokenized(path):
-
-	corpus = open(path, "r")
-	corpus_contenu = corpus.read()
-
-	corpus_tokenized = corpus_contenu.split(" ")
-	no_punctuation_tokens = []
-	for token in corpus_tokenized:
-	    token = token.replace(".","")
-	    token = token.replace(",","")
-	    token = token.replace("'", "")
-	    token = token.replace(";", "")
-	    token = token.replace("\n", "")
-	    token = token.replace("\t", "")
-	    no_punctuation_tokens.append(token)
-	return no_punctuation_tokens
-
-def test_tokenized_article(article):
+#fonction permettant de tokenizer l'article - stockage dans un tableau
+def tokenize_article(article):
 	if '.W' in article.keys():
 		new_article = []
 		article['.W'] = article['.W'].split(" ")
 		for token in article['.W']:
+			#print(token)
 			token = token.lower()
 			token = token.replace(".","")
 			token = token.replace(",","")
@@ -73,18 +56,26 @@ def test_tokenized_article(article):
 			token = token.replace(";", "")
 			token = token.replace("\n", "")
 			new_article.append(token)
-			article['.W'] = new_article
-		return article['.W']
+		
+		return new_article 
 	else:
 		return -1
 
-def suppr_commonwords_article(tokenized_article):
-	for token in tokenized_article:
-		if token in common_tokenized:
-			tokenized_article.remove(token)
-	return tokenized_article
+def suppr_commonwords_article(article):
+	tokenized_article = tokenize_article(article)
+	if tokenized_article == -1 :
+		return "Pas de resume dans cet article"
+	else:
+		article_without_common = []
+		for token  in tokenized_article:
+			if token not in common_tokenized:
+				article_without_common.append(token)
+		return article_without_common
 
-print(test_tokenized_article(articles[20]))
-print(articles[20]['.W'])
 
-print(suppr_commonwords_article(articles[20]['.W']))
+print("Traitement texte 20")
+print(suppr_commonwords_article(articles[20]))
+print("Traitement texte 1")
+print(suppr_commonwords_article(articles[1]))
+
+# importe puis commande re.findall(r"[\w]", "C'est un test ?!")
