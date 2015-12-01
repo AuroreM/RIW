@@ -29,16 +29,20 @@ def stockercollection(path):
 		documents[id] = document
 		return documents
 
-article = stockercollection("cacm.all")
+articles = stockercollection("cacm.all")
 
-print(article[1][".A"])
+#print(articles[18].keys())
+#print(articles[20].keys())
+print(articles[20]['.W'])
+#print(len(articles.keys()))
+
 
 #Stockage des commons words dans un array
 fichier_common_words = open("common_words", "r")
 common_words_contenu = fichier_common_words.read()
 common_tokenized = common_words_contenu.split("\n")
 
-print(common_tokenized)
+#print(common_tokenized)
 
 def tokenized(path):
 
@@ -56,3 +60,22 @@ def tokenized(path):
 	    token = token.replace("\t", "")
 	    no_punctuation_tokens.append(token)
 	return no_punctuation_tokens
+
+def test_tokenized_article(article):
+	if '.W' in article.keys():
+		new_article = []
+		article['.W'] = article['.W'].split(" ")
+		for token in article['.W']:
+			token = token.replace(".","")
+			token = token.replace(",","")
+			token = token.replace("'", "")
+			token = token.replace(";", "")
+			token = token.replace("\n", "")
+			new_article.append(token)
+			article['.W'] = new_article
+		return article['.W']
+	else:
+		return -1
+
+print(test_tokenized_article(articles[20]))
+print(articles[20]['.W'])
