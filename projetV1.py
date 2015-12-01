@@ -73,9 +73,28 @@ def suppr_commonwords_article(article):
 		return article_without_common
 
 
-print("Traitement texte 20")
-print(suppr_commonwords_article(articles[20]))
-print("Traitement texte 1")
-print(suppr_commonwords_article(articles[1]))
+#print("Traitement texte 20")
+#print(len(suppr_commonwords_article(articles[20])))
+#print("Traitement texte 1")
+#print(suppr_commonwords_article(articles[1]))
 
+def word_and_frequency(tokenized_article):
+	frequency_index = {}
+	for word in tokenized_article:
+		#print word
+		if word in frequency_index:
+			frequency_index[word] = frequency_index[word] + 1
+			#print(frequency_index)
+		else:
+			frequency_index[word] = 1
+			#print(frequency_index)
+	return frequency_index
+
+print(len(articles))
+
+tokenized_20 = suppr_commonwords_article(articles[20])
+print(tokenized_20)
+#print(len(tokenized_20))
+
+print(word_and_frequency(tokenized_20))
 # importe puis commande re.findall(r"[\w]", "C'est un test ?!")
