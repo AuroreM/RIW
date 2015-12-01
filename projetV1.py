@@ -43,11 +43,13 @@ common_words_contenu = fichier_common_words.read()
 common_tokenized = common_words_contenu.split("\n")
 
 #fonction permettant de tokenizer l'article - stockage dans un tableau
+#utiliser dans treat_article
 def tokenize_article(article):
 	if '.W' in article.keys():
+		copy_article=article['.W']
 		new_article = []
-		article['.W'] = article['.W'].split(" ")
-		for token in article['.W']:
+		copy_article = copy_article.split(" ")
+		for token in copy_article:
 			#print(token)
 			token = token.lower()
 			token = token.replace(".","")
@@ -61,10 +63,14 @@ def tokenize_article(article):
 	else:
 		return -1
 
-def suppr_commonwords_article(article):
+#pour tokenizer directement
+# importe puis commande re.findall(r"[\w]", "C'est un test ?!")
+
+#Fonction permettant de finir le traitement de l'article (suppression des commonwords)
+def treat_article(article):
 	tokenized_article = tokenize_article(article)
 	if tokenized_article == -1 :
-		return "Pas de resume dans cet article"
+		return -1
 	else:
 		article_without_common = []
 		for token  in tokenized_article:
@@ -73,12 +79,16 @@ def suppr_commonwords_article(article):
 		return article_without_common
 
 
+#TEST
 #print("Traitement texte 20")
-#print(len(suppr_commonwords_article(articles[20])))
+#print(len(suppr_commonwords(articles[20])))
 #print("Traitement texte 1")
-#print(suppr_commonwords_article(articles[1]))
+#print(suppr_commonwords(articles[1]))
 
-def word_and_frequency(tokenized_article):
+"""
+#Creer un index sur un article
+#Fonction non utilisee
+def createIndexArticle(tokenized_article):
 	frequency_index = {}
 	for word in tokenized_article:
 		#print word
@@ -90,11 +100,21 @@ def word_and_frequency(tokenized_article):
 			#print(frequency_index)
 	return frequency_index
 
-print(len(articles))
+#print(createIndexArticle(tokenized_20))
+"""
 
-tokenized_20 = suppr_commonwords_article(articles[20])
-print(tokenized_20)
-#print(len(tokenized_20))
+def createIndex(articles):
+	index = {}
+	for cle_article in articles:
+		article=articles[cle_article]
+		if treat_article(article) <> -1:
+			treated_article = treat_article(article)
+			for token in treated_article:
+				if token in index:
+					index[token] = index[token] + 1
+				else:
+					index[token] = 1
+	return index
 
-print(word_and_frequency(tokenized_20))
-# importe puis commande re.findall(r"[\w]", "C'est un test ?!")
+
+print(createIndex(articles))
