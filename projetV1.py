@@ -1,3 +1,4 @@
+#Stocker chaque article de la collection dans un dico
 def stockercollection(path):
 		documents = {}
 		document ={}
@@ -30,12 +31,18 @@ def stockercollection(path):
 
 article = stockercollection("cacm.all")
 
-#print(article[1])
+print(article[1][".A"])
+
+#Stockage des commons words dans un array
+fichier_common_words = open("common_words", "r")
+common_words_contenu = fichier_common_words.read()
+common_tokenized = common_words_contenu.split("\n")
+
+print(common_tokenized)
 
 def tokenized(path):
 
 	corpus = open(path, "r")
-	#print(corpus_tokenized)
 	corpus_contenu = corpus.read()
 
 	corpus_tokenized = corpus_contenu.split(" ")
@@ -49,6 +56,3 @@ def tokenized(path):
 	    token = token.replace("\t", "")
 	    no_punctuation_tokens.append(token)
 	return no_punctuation_tokens
-    
-#print(no_punctuation_tokens)
-
