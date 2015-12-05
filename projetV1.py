@@ -190,7 +190,7 @@ def createInverseIndex(articles):
 	return index
 
 #print(createInverseIndex(articles))
-#index = createInverseIndex(articles)
+index = createInverseIndex(articles)
 #print(index)
 
 #index qui renvoie un dictionnaire{"mot" : [{id doc : freqTF}]}
@@ -229,7 +229,7 @@ def createTokenIndex(articles):
 #print(index['parameterization'])
 
 
-#Creer un index sur un article {"mot" : freqTF}
+#Creer un index sur un article {"mot" : freqTFIDF}
 def createTFIDFIndexArticle(tokenized_article, articles):
 	article_frequency_index = {}
 	word_frequency = createTokenIndex(articles)
@@ -247,19 +247,33 @@ def createTFIDFIndexArticle(tokenized_article, articles):
 
 #print(createTFIDFIndexArticle(tokenized_20, articles))
 
-"""
-A revoir tourne indéfiniment
-#index qui renvoie un dictionnaire{"mot" : [{id doc : freqTF}]}
+#index qui renvoie un dictionnaire{"mot" : [{id doc : freqTFIDF}]}
 def createTFIDFIndex(articles):
 	index = {}
+	word_frequency = createTokenIndex(articles)
 	for cle in articles:
 		article=articles[cle]
 		treated_article = treat_article(article)
 		if treat_article(article) <> -1:
-			indexArticle=createTFIDFIndexArticle(treated_article, articles)
+			indexArticle=createTFIndexArticle(treated_article)
+			for token in indexArticle:
+				freq_word_col = word_frequency[token]
+				IDF = round(math.log((len(articles)/freq_word_col),10))
+				indexArticle[token] = indexArticle[token]*IDF
 			index[cle] = indexArticle
 	return index
 
-print(createTFIDFIndex(articles))
+#print(createTFIDFIndex(articles))
 
-""" 
+#requête recherchant la présence (pas de notion de fréquence ici) des deux mots dans un doc
+def queryAND2words(word1, word2):
+	return (set(index[word1].keys()) & set(index[word2].keys()))
+
+print(queryAND2words('addition','weight'))
+
+#requête recherchant la présence (pas de notion de fréquence ici) d'un des deux mots dans un doc
+def queryOR2words(word1, word2):
+	return (set(index[word1].keys()) | set(index[word2].keys()))
+
+print(queryOR2words('addition','weight'))
+

@@ -1,0 +1,45 @@
+Structure du code
+
+#Stocker chaque article de la collection dans un dico
+def stockercollection(path):
+
+#Stockage des commons words dans un array
+fichier_common_words contient les commonwords
+
+#fonction permettant de tokenizer l'article - stockage dans un tableau
+#utiliser dans treat_article
+def tokenize_article(article):
+
+#Fonction permettant de finir le traitement de l'article (suppression des commonwords)
+def treat_article(article):
+
+#Creer un index sur un article {"mot" : freq}
+def createIndexArticle(tokenized_article):
+	
+#Creer un index sur un article {"mot" : freqTF}
+def createTFIndexArticle(tokenized_article):
+
+#index qui renvoie un dictionnaire{"mot" : [{id doc : freq}]}
+def createIndex(articles):
+	
+#index qui renvoie un dictionnaire{"mot" : [{id doc : freqTF}]}
+def createTFIndex(articles):
+	
+#index qui renvoie un dictionnaire{"mot" : [{id doc : freq}]}
+def createInverseIndex(articles):
+	
+#index qui renvoie un dictionnaire{"mot" : [{id doc : freqTF}]}
+def createTFInverseIndex(articles):
+
+#fonction qui renvoie un index sur toute la collection index = {"mot" : freq}
+def createTokenIndex(articles):
+
+#Creer un index sur un article {"mot" : freqTF}
+def createTFIDFIndexArticle(tokenized_article, articles):
+
+#requête recherchant la présence (pas de notion de fréquence ici) des deux mots dans un doc
+def queryAND2words(word1, word2):
+
+#requête recherchant la présence (pas de notion de fréquence ici) d'un des deux mots dans un doc
+def queryOR2words(word1, word2):
+	
