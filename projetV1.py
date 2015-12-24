@@ -34,11 +34,6 @@ def stockercollection(path):
 #on stocke les articles de notre collection dans le dico articles
 articles = stockercollection("cacm.all")
 
-#print(articles[18].keys())
-#print(articles[20].keys())
-#print(articles[20]['.W'])
-#print(len(articles.keys()))
-
 #Stockage des commons words dans un array
 fichier_common_words = open("common_words", "r")
 common_words_contenu = fichier_common_words.read()
